@@ -3,6 +3,15 @@ package viterbi
 import "sort"
 import "math"
 
+// getPossibleStates returns the possible states at the given k with the otherwise default state
+func getPossibleStates(k int, states [][]string, defaultState string) []string {
+	if k < 1 {
+		return []string{defaultState}
+	}
+
+	return states[k-1]
+}
+
 // Viterbi represents the hidden markov model viterbi path finding algorithm using the trigram model
 func Viterbi(state *MarkovState, transitionProbFn func(w, u, v string) float64) []string {
 	if state == nil || state.InitialStates == nil {
@@ -138,11 +147,4 @@ func Viterbi(state *MarkovState, transitionProbFn func(w, u, v string) float64) 
 	return y
 }
 
-// getPossibleStates returns the possible states at the given k with the otherwise default state
-func getPossibleStates(k int, states [][]string, defaultState string) []string {
-	if k < 1 {
-		return []string{defaultState}
-	}
 
-	return states[k-1]
-}
